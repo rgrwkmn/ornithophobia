@@ -7,9 +7,7 @@ export default {
   dest: 'build/bundle.js',
   format: 'iife',
   globals: {
-    phaser: 'Phaser',
-    pixi: 'PIXI',
-    p2: 'p2'
+    // phaser: 'Phaser'
   },
   plugins: [
     resolve({

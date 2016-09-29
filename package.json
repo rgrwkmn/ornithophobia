@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "npm run watchBabel; npm run watchRollup; npm run start",
+    "start": "npm run watchBabel & npm run watchRollup & npm run startServer",
     "cpPhaser": "cp node_modules/phaser/build/phaser.min.js build/phaser/",
     "startServer": "http-server build -p 8001",
     "watchBabel": "./node_modules/babel-cli/bin/babel.js src -d build --source-maps inline --watch",
@@ -14,7 +14,7 @@
   "license": "BEST_LICENSE",
   "private": true,
   "dependencies": {
-    "babel-polyfill": "^6.13.0",
+    "babel-polyfill": "6.13.0",
     "phaser": "2.6.2"
   },
   "devDependencies": {
