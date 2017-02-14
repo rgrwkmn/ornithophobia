@@ -1,48 +1,4 @@
-const TILE_SIZE = 16;
-
-function findObjectsByType(type, map) {
-  var result = [];
-  Object.keys(map.objects).forEach(key => {
-    map.objects[key].forEach(element => {
-      if(element.type === type) {
-        element.y -= map.tileHeight;
-        result.push(element);
-      }
-    });
-  });
-  return result;
-}
-
-function arrangeObjectsByType(map) {
-  return Object.keys(map.objects).reduce((objects, key) => {
-    map.objects[key].forEach(object => {
-      if (object.type) {
-        if (!objects[object.type]) {
-          objects[object.type] = [];
-        }
-        objects[object.type].push(object);
-      } else {
-        console.warn('object found without type', object.name, object);
-      }
-    });
-    return objects;
-  }, {});
-}
-
-// create a sprite from an object
-function createSpriteFromTiledObject(element, group) {
-  if (!element.properties || !element.properties.sprite) {
-    console.error('no sprite defined for element', element);
-    return;
-  }
-  const sprite = group.create(element.x, element.y - TILE_SIZE, element.properties.sprite);
-  sprite.gameData = {
-    name: element.name,
-    type: element.type
-  };
-  Object.assign(sprite.gameData, element.properties);
-  return sprite;
-}
+import TiledInterpreter from '../engine/TiledInterpreter';
 
 function collect(entity, item) {
   console.log(entity.key, 'collects', item.gameData.name);
@@ -76,11 +32,7 @@ function knock(entity, door) {
 
 class State extends Phaser.State {
   preload() {
-    this.load.tilemap('level1', 'assets/example.json', null, Phaser.Tilemap.TILED_JSON);
-    this.load.image('gameTiles', 'assets/simples_pimples.png');
-    this.load.spritesheet('skull-key', 'assets/skull-key.png', 16, 16);
-    this.load.spritesheet('gold-door', 'assets/gold-door.png', 16, 16);
-    this.load.spritesheet('turkey-leg', 'assets/turkey-leg.png', 16, 16);
+    this.preloadTilemap('level1', 'assets/maps/example.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.spritesheet('player', 'assets/dude.png', 32, 48);
   }
   create() {
@@ -94,12 +46,7 @@ class State extends Phaser.State {
     this.scale.pageAlignHorizontally = true;
     this.scale.pageAlignVertically = true;
 
-    this.map = this.game.add.tilemap('level1');
-
-    this.map.addTilesetImage(
-      'simples_pimples', // this.map.tilesets[0].name for some reason
-      'gameTiles', 16, 16
-    );
+    this.map = this.createTilemap('level1');
 
     this.mapLayers = [];
     this.collideLayers = [];
@@ -114,22 +61,22 @@ class State extends Phaser.State {
       }
     });
 
-    const objectsByType = arrangeObjectsByType(this.map);
+    const objectsByType = this.arrangeObjectsByType(this.getObjectsFromTilemap(this.tilemap));
     this.consumables = this.game.add.group();
     this.consumables.enableBody = true;
     const consumables = objectsByType.consumable;
-    consumables.forEach(item => createSpriteFromTiledObject(item, this.consumables));
+    consumables.forEach(item => this.createSpriteFromTiledObject(item, this.consumables));
 
     this.keys = this.game.add.group();
     this.keys.enableBody = true;
     const keys = objectsByType.key;
-    keys.forEach(item => createSpriteFromTiledObject(item, this.keys));
+    keys.forEach(item => this.createSpriteFromTiledObject(item, this.keys));
 
     this.doors = this.game.add.group();
     this.doors.enableBody = true;
     const doors = objectsByType.door;
     doors.forEach(item => {
-      const sprite = createSpriteFromTiledObject(item, this.doors);
+      const sprite = this.createSpriteFromTiledObject(item, this.doors);
       sprite.body.moves = false;
     });
 
@@ -137,7 +84,7 @@ class State extends Phaser.State {
 
     // add player
     const playerStart = objectsByType.playerStart[0];
-    this.player = this.add.sprite(playerStart.x, playerStart.y - TILE_SIZE, 'player');
+    this.player = this.add.sprite(playerStart.x, playerStart.y - playerStart.height, 'player');
     this.player.scale.setTo(0.5, 0.5);
     this.physics.arcade.enable(this.player);
     this.player.animations.add('left', [ 0, 1, 2, 3 ], 10, true);
@@ -180,4 +127,4 @@ class State extends Phaser.State {
   }
 }
 
-export default State;
+export default Object.assign(State.prototype, TiledInterpreter);
