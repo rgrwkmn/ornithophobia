@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 import possessionState from './possession/state';
 
-const game = new Phaser.Game(384, 384, Phaser.AUTO, '');
+const transparent = false;
+const antialias = false;
+const game = new Phaser.Game(320, 240, Phaser.AUTO, '', this, transparent, antialias);
 
 game.state.add('possession', possessionState, true);

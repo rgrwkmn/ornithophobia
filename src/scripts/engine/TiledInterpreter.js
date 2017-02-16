@@ -13,17 +13,13 @@ const TiledInterpreter = {
   },
   preloadTilemapAssets(name) {
     this.tilemap = this.cache.getTilemapData(name);
-    console.log('preload tilemap assets', this.tilemap);
     // load tileset images
     this.tilemap.data.tilesets.forEach(set => {
-      console.log('load tiles', `assets/${set.image.replace(/(\.\.\/)+/, '')}`);
       // TODO fix this set.image.replace regex hack, this is essentially hard coded
       this.load.image(set.name, `assets/${set.image.replace(/(\.\.\/)+/, '')}`);
     });
-    console.log('load object sprites');
     // load object sprites
     this.getSpritesFromTilemap(this.tilemap).forEach(object => {
-      console.log('load sprite', `assets/${object.properties.sprite.replace(/(\.\.\/)+/, '')}`);
       this.load.spritesheet(
         object.properties.sprite,
         `assets/${object.properties.sprite.replace(/(\.\.\/)+/, '')}`,
@@ -43,12 +39,10 @@ const TiledInterpreter = {
       }
       return objectsBySprite;
     }, {});
-    console.log('objectsBySpriteMap', objectsBySpriteMap);
     return Object.keys(objectsBySpriteMap).map(key => objectsBySpriteMap[key]);
   },
   createTilemap(name) {
     const map = this.game.add.tilemap(name);
-    console.log('map', map);
     this.tilemap.data.tilesets.forEach(set => {
       map.addTilesetImage(
         set.name,
@@ -81,7 +75,6 @@ const TiledInterpreter = {
       } else {
         console.warn('object found without type', object.name, object);
       }
-      console.log(objects);
       return objects;
     }, {});
   },
@@ -104,7 +97,6 @@ const TiledInterpreter = {
       console.error('no sprite defined for object', object);
       return;
     }
-    console.log('create sprite', object);
     const sprite = group.create(object.x, object.y - object.height, object.properties.sprite);
     sprite.gameData = {
       name: object.name,
