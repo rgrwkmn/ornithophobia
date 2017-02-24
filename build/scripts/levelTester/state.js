@@ -9,7 +9,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import TiledLevelState from '../engine/TiledLevelState';
-import { tellPlayer } from '../engine/interactions';
 
 var State = function (_TiledLevelState) {
   _inherits(State, _TiledLevelState);
@@ -23,9 +22,13 @@ var State = function (_TiledLevelState) {
   _createClass(State, [{
     key: 'init',
     value: function init() {
-      _get(State.prototype.__proto__ || Object.getPrototypeOf(State.prototype), 'init', this).call(this, {
-        mapPath: '/assets/maps/larger/larger.json'
-      });
+      var map = window.location.search.match(/map=([^&]+)/);
+      if (!map) {
+        console.error('Can\'t load map from url path: ' + window.location.href + '. Looking for ?map=mapFolder/mapJson.json');
+      }
+      var mapPath = '/assets/maps/' + map[1];
+      console.log('Loading map ' + mapPath);
+      _get(State.prototype.__proto__ || Object.getPrototypeOf(State.prototype), 'init', this).call(this, { mapPath: mapPath });
     }
   }, {
     key: 'preload',
@@ -36,11 +39,6 @@ var State = function (_TiledLevelState) {
     key: 'create',
     value: function create() {
       _get(State.prototype.__proto__ || Object.getPrototypeOf(State.prototype), 'create', this).call(this);
-
-      tellPlayer({ message: 'you awaken in a rocky forest' });
-      tellPlayer({ message: 'there are pixels around you that should probably be transparent' });
-      tellPlayer({ message: 'you somehow know that in order to leave this place' });
-      tellPlayer({ message: 'you will have to unlock some doors...' });
     }
   }, {
     key: 'update',
@@ -53,4 +51,4 @@ var State = function (_TiledLevelState) {
 }(TiledLevelState);
 
 export default State;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9zY3JpcHRzL3Bvc3Nlc3Npb24vc3RhdGUuanMiXSwibmFtZXMiOlsiVGlsZWRMZXZlbFN0YXRlIiwidGVsbFBsYXllciIsIlN0YXRlIiwibWFwUGF0aCIsIm1lc3NhZ2UiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxPQUFPQSxlQUFQLE1BQTRCLDJCQUE1QjtBQUNBLFNBQVNDLFVBQVQsUUFBMkIsd0JBQTNCOztJQUVNQyxLOzs7Ozs7Ozs7OzsyQkFDRztBQUNMLHlHQUFXO0FBQ1RDLGlCQUFTO0FBREEsT0FBWDtBQUdEOzs7OEJBQ1M7QUFDUjtBQUNEOzs7NkJBQ1E7QUFDUDs7QUFFQUYsaUJBQVcsRUFBRUcsU0FBUyw4QkFBWCxFQUFYO0FBQ0FILGlCQUFXLEVBQUVHLFNBQVMsaUVBQVgsRUFBWDtBQUNBSCxpQkFBVyxFQUFFRyxTQUFTLG9EQUFYLEVBQVg7QUFDQUgsaUJBQVcsRUFBRUcsU0FBUyx1Q0FBWCxFQUFYO0FBQ0Q7Ozs2QkFDUTtBQUNQO0FBQ0Q7Ozs7RUFuQmlCSixlOztBQXNCcEIsZUFBZUUsS0FBZiIsImZpbGUiOiJzdGF0ZS5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBUaWxlZExldmVsU3RhdGUgZnJvbSAnLi4vZW5naW5lL1RpbGVkTGV2ZWxTdGF0ZSc7XG5pbXBvcnQgeyB0ZWxsUGxheWVyIH0gZnJvbSAnLi4vZW5naW5lL2ludGVyYWN0aW9ucyc7XG5cbmNsYXNzIFN0YXRlIGV4dGVuZHMgVGlsZWRMZXZlbFN0YXRlIHtcbiAgaW5pdCgpIHtcbiAgICBzdXBlci5pbml0KHtcbiAgICAgIG1hcFBhdGg6ICcvYXNzZXRzL21hcHMvbGFyZ2VyL2xhcmdlci5qc29uJ1xuICAgIH0pO1xuICB9XG4gIHByZWxvYWQoKSB7XG4gICAgc3VwZXIucHJlbG9hZCgpO1xuICB9XG4gIGNyZWF0ZSgpIHtcbiAgICBzdXBlci5jcmVhdGUoKTtcblxuICAgIHRlbGxQbGF5ZXIoeyBtZXNzYWdlOiAneW91IGF3YWtlbiBpbiBhIHJvY2t5IGZvcmVzdCcgfSk7XG4gICAgdGVsbFBsYXllcih7IG1lc3NhZ2U6ICd0aGVyZSBhcmUgcGl4ZWxzIGFyb3VuZCB5b3UgdGhhdCBzaG91bGQgcHJvYmFibHkgYmUgdHJhbnNwYXJlbnQnIH0pO1xuICAgIHRlbGxQbGF5ZXIoeyBtZXNzYWdlOiAneW91IHNvbWVob3cga25vdyB0aGF0IGluIG9yZGVyIHRvIGxlYXZlIHRoaXMgcGxhY2UnIH0pO1xuICAgIHRlbGxQbGF5ZXIoeyBtZXNzYWdlOiAneW91IHdpbGwgaGF2ZSB0byB1bmxvY2sgc29tZSBkb29ycy4uLicgfSk7XG4gIH1cbiAgdXBkYXRlKCkge1xuICAgIHN1cGVyLnVwZGF0ZSgpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IFN0YXRlO1xuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9zY3JpcHRzL2xldmVsVGVzdGVyL3N0YXRlLmpzIl0sIm5hbWVzIjpbIlRpbGVkTGV2ZWxTdGF0ZSIsIlN0YXRlIiwibWFwIiwid2luZG93IiwibG9jYXRpb24iLCJzZWFyY2giLCJtYXRjaCIsImNvbnNvbGUiLCJlcnJvciIsImhyZWYiLCJtYXBQYXRoIiwibG9nIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O0FBQUEsT0FBT0EsZUFBUCxNQUE0QiwyQkFBNUI7O0lBRU1DLEs7Ozs7Ozs7Ozs7OzJCQUNHO0FBQ0wsVUFBTUMsTUFBTUMsT0FBT0MsUUFBUCxDQUFnQkMsTUFBaEIsQ0FBdUJDLEtBQXZCLENBQTZCLGFBQTdCLENBQVo7QUFDQSxVQUFJLENBQUNKLEdBQUwsRUFBVTtBQUNSSyxnQkFBUUMsS0FBUixxQ0FBK0NMLE9BQU9DLFFBQVAsQ0FBZ0JLLElBQS9EO0FBQ0Q7QUFDRCxVQUFNQyw0QkFBMEJSLElBQUksQ0FBSixDQUFoQztBQUNBSyxjQUFRSSxHQUFSLGtCQUEyQkQsT0FBM0I7QUFDQSx5R0FBVyxFQUFFQSxnQkFBRixFQUFYO0FBQ0Q7Ozs4QkFDUztBQUNSO0FBQ0Q7Ozs2QkFDUTtBQUNQO0FBQ0Q7Ozs2QkFDUTtBQUNQO0FBQ0Q7Ozs7RUFsQmlCVixlOztBQXFCcEIsZUFBZUMsS0FBZiIsImZpbGUiOiJzdGF0ZS5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBUaWxlZExldmVsU3RhdGUgZnJvbSAnLi4vZW5naW5lL1RpbGVkTGV2ZWxTdGF0ZSc7XG5cbmNsYXNzIFN0YXRlIGV4dGVuZHMgVGlsZWRMZXZlbFN0YXRlIHtcbiAgaW5pdCgpIHtcbiAgICBjb25zdCBtYXAgPSB3aW5kb3cubG9jYXRpb24uc2VhcmNoLm1hdGNoKC9tYXA9KFteJl0rKS8pO1xuICAgIGlmICghbWFwKSB7XG4gICAgICBjb25zb2xlLmVycm9yKGBDYW4ndCBsb2FkIG1hcCBmcm9tIHVybCBwYXRoOiAke3dpbmRvdy5sb2NhdGlvbi5ocmVmfS4gTG9va2luZyBmb3IgP21hcD1tYXBGb2xkZXIvbWFwSnNvbi5qc29uYCk7XG4gICAgfVxuICAgIGNvbnN0IG1hcFBhdGggPSBgL2Fzc2V0cy9tYXBzLyR7bWFwWzFdfWA7XG4gICAgY29uc29sZS5sb2coYExvYWRpbmcgbWFwICR7bWFwUGF0aH1gKTtcbiAgICBzdXBlci5pbml0KHsgbWFwUGF0aCB9KTtcbiAgfVxuICBwcmVsb2FkKCkge1xuICAgIHN1cGVyLnByZWxvYWQoKTtcbiAgfVxuICBjcmVhdGUoKSB7XG4gICAgc3VwZXIuY3JlYXRlKCk7XG4gIH1cbiAgdXBkYXRlKCkge1xuICAgIHN1cGVyLnVwZGF0ZSgpO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IFN0YXRlO1xuIl19

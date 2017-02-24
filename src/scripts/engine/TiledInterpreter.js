@@ -15,14 +15,14 @@ const TiledInterpreter = {
     this.tilemap = this.cache.getTilemapData(name);
     // load tileset images
     this.tilemap.data.tilesets.forEach(set => {
-      // TODO fix this set.image.replace regex hack, this is essentially hard coded
-      this.load.image(set.name, `assets/${set.image.replace(/(\.\.\/)+/, '')}`);
+      // TODO this is based on the relative paths all being to the assets folder or something
+      this.load.image(set.name, `/assets/${set.image.replace(/(\.\.\/)+/, '')}`);
     });
     // load object sprites
     this.getSpritesFromTilemap(this.tilemap).forEach(object => {
       this.load.spritesheet(
         object.properties.sprite,
-        `assets/${object.properties.sprite.replace(/(\.\.\/)+/, '')}`,
+        `/assets/${object.properties.sprite.replace(/(\.\.\/)+/, '')}`,
         object.width,
         object.height
       );
@@ -55,7 +55,9 @@ const TiledInterpreter = {
     return map;
   },
   initiateTiledObjectGroups(map) {
-    // TODO need more data about objects/entities in tiled in order to do this
+    // TODO need more data about objects/entities in tiled and corresponding
+    // classes in game code to handle this automagically
+    // see TiledLevelState.create for manual implementation
     const groups = {};
     const objectsByType = this.arrangeObjectsByType(map.objects);
     Object.keys(objectsByType).forEach(type => {
@@ -85,6 +87,9 @@ const TiledInterpreter = {
       }
       return objects;
     }, []);
+  },
+  getTilemapObjectsByType(tilemap) {
+    return this.arrangeObjectsByType(this.getObjectsFromTilemap(tilemap));
   },
   /**
    * Creates a Phaser sprite in a sprite group from a Tiled object

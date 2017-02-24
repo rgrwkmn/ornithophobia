@@ -42,7 +42,7 @@
                  "properties":
                     {
                      "key":"skullKey",
-                     "sprite":"..\/sprites\/gold-door.png"
+                     "sprite":"..\/..\/sprites\/gold-door.png"
                     },
                  "propertytypes":
                     {
@@ -50,7 +50,7 @@
                      "sprite":"file"
                     },
                  "rotation":0,
-                 "type":"door",
+                 "type":"Door",
                  "visible":true,
                  "width":16,
                  "x":64.25,
@@ -64,7 +64,7 @@
                  "properties":
                     {
                      "id":"skullKey",
-                     "sprite":"..\/sprites\/skull-key.png"
+                     "sprite":"..\/..\/sprites\/skull-key.png"
                     },
                  "propertytypes":
                     {
@@ -72,7 +72,7 @@
                      "sprite":"file"
                     },
                  "rotation":0,
-                 "type":"key",
+                 "type":"Key",
                  "visible":true,
                  "width":16,
                  "x":57,
@@ -85,14 +85,14 @@
                  "name":"turkeyLeg",
                  "properties":
                     {
-                     "sprite":"..\/sprites\/turkey-leg.png"
+                     "sprite":"..\/..\/sprites\/turkey-leg.png"
                     },
                  "propertytypes":
                     {
                      "sprite":"file"
                     },
                  "rotation":0,
-                 "type":"consumable",
+                 "type":"Consumable",
                  "visible":true,
                  "width":16,
                  "x":208.25,
@@ -104,7 +104,7 @@
                  "id":8,
                  "name":"playerStart",
                  "rotation":0,
-                 "type":"playerStart",
+                 "type":"PlayerStart",
                  "visible":true,
                  "width":16,
                  "x":304,
@@ -124,7 +124,7 @@
         {
          "columns":50,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/simples_pimples.png",
+         "image":"..\/..\/..\/..\/..\/simples_pimples.png",
          "imageheight":1280,
          "imagewidth":800,
          "margin":0,

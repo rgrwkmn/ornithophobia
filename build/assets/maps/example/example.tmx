@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="24" height="24" tilewidth="16" tileheight="16" nextobjectid="10">
  <tileset firstgid="1" name="simples_pimples" tilewidth="16" tileheight="16" tilecount="4000" columns="50">
-  <image source="../../../../simples_pimples.png" trans="5a5268" width="800" height="1280"/>
+  <image source="../../../../../simples_pimples.png" trans="5a5268" width="800" height="1280"/>
   <tile id="979">
    <properties>
     <property name="tileSprite" value="turkey-leg"/>
@@ -73,23 +73,23 @@
 </data>
  </layer>
  <objectgroup name="objects">
-  <object id="3" name="exitDoor" type="door" gid="502" x="64.25" y="80" width="16" height="16">
+  <object id="3" name="exitDoor" type="Door" gid="502" x="64.25" y="80" width="16" height="16">
    <properties>
     <property name="key" value="skullKey"/>
-    <property name="sprite" type="file" value="../sprites/gold-door.png"/>
+    <property name="sprite" type="file" value="../../sprites/gold-door.png"/>
    </properties>
   </object>
-  <object id="4" name="skullKey" type="key" gid="2279" x="57" y="363" width="16" height="16">
+  <object id="4" name="skullKey" type="Key" gid="2279" x="57" y="363" width="16" height="16">
    <properties>
     <property name="id" value="skullKey"/>
-    <property name="sprite" type="file" value="../sprites/skull-key.png"/>
+    <property name="sprite" type="file" value="../../sprites/skull-key.png"/>
    </properties>
   </object>
-  <object id="5" name="turkeyLeg" type="consumable" gid="980" x="208.25" y="51.5" width="16" height="16">
+  <object id="5" name="turkeyLeg" type="Consumable" gid="980" x="208.25" y="51.5" width="16" height="16">
    <properties>
-    <property name="sprite" type="file" value="../sprites/turkey-leg.png"/>
+    <property name="sprite" type="file" value="../../sprites/turkey-leg.png"/>
    </properties>
   </object>
-  <object id="8" name="playerStart" type="playerStart" gid="77" x="304" y="380" width="16" height="16"/>
+  <object id="8" name="playerStart" type="PlayerStart" gid="77" x="304" y="380" width="16" height="16"/>
  </objectgroup>
 </map>
