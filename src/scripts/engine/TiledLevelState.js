@@ -19,7 +19,7 @@ class TiledLevelState extends Phaser.State {
   preload() {
     const { mapName, mapPath } = this.tiledLevel;
     this.preloadTilemap(mapName, mapPath, null, Phaser.Tilemap.TILED_JSON);
-    this.load.spritesheet('player', '/assets/sprites/player.png', 16, 16);
+    this.load.spritesheet('player', '/assets/sprites/dog.gif', 24, 16);
   }
   create() {
     const { mapName } = this.tiledLevel;
@@ -90,7 +90,9 @@ class TiledLevelState extends Phaser.State {
     const playerStart = objectsByType.PlayerStart[0];
     this.player = this.add.sprite(playerStart.x, playerStart.y - playerStart.height, 'player');
     this.physics.arcade.enable(this.player);
-    this.player.animations.add('walk', [ 1, 2 ], 10, true);
+    this.player.animations.add('walk', [ 0, 2 ], 8, true);
+    this.player.animations.add('sit', [ 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6 ], 8, true);
+    this.player.scale.x = -1;
     this.player.anchor.setTo(0.5, 1);
     this.player.body.setSize(10, 8, 3, 8);
     this.game.camera.follow(this.player);
@@ -113,31 +115,31 @@ class TiledLevelState extends Phaser.State {
     switch (true) {
     case this.cursors.left.isDown:
       direction += 'left';
-      this.player.body.velocity.x = -75;
-      this.player.scale.x = -1;
+      this.player.body.velocity.x = -50;
+      this.player.scale.x = 1;
       break;
     case this.cursors.right.isDown:
       direction += 'right';
-      this.player.body.velocity.x = 75;
-      this.player.scale.x = 1;
+      this.player.body.velocity.x = 50;
+      this.player.scale.x = -1;
       break;
     }
 
     switch (true) {
     case this.cursors.up.isDown:
       direction += 'up';
-      this.player.body.velocity.y = -75;
+      this.player.body.velocity.y = -50;
       break;
     case this.cursors.down.isDown:
       direction += 'down';
-      this.player.body.velocity.y = 75;
+      this.player.body.velocity.y = 50;
       break;
     }
 
     if (direction) {
       this.player.animations.play('walk');
     } else {
-      this.player.frame = 0;
+      this.player.animations.play('sit');
     }
   }
 }
