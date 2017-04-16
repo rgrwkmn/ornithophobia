@@ -11,7 +11,7 @@
     "startServer": "http-server build -p 8001",
     "watchBabel": "node node_modules/babel-cli/bin/babel.js src/scripts -d build/scripts --source-maps inline --watch",
     "watchRollup": "node node_modules/rollup/bin/rollup -c --watch --sourcemap inline",
-    "symlink": "rm node_modules/ornithophobia && ln -s ../src/scripts ./node_modules/ornithophobia"
+    "symlink": "rm -rf node_modules/ornithophobia && ln -s ../src/scripts ./node_modules/ornithophobia"
   },
   "author": "RAVENLORD",
   "license": "BEST_LICENSE",
