@@ -4,3 +4,4 @@ npm-debug.log
 .vagrant
 *.log
 build
+build/*
