@@ -4,12 +4,13 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "setup": "npm install && npm run cpPhaser && ln -s ../src/scripts ./node_modules/ornithophobia",
     "start": "npm run symlink && npm run watchBabel & npm run watchRollup & npm run startServer",
     "postInstall": "npm run cpPhaser",
     "cpPhaser": "cp node_modules/phaser/build/phaser.min.js build/phaser/",
     "startServer": "http-server build -p 8001",
-    "watchBabel": "./node_modules/babel-cli/bin/babel.js src/scripts -d build/scripts --source-maps inline --watch",
-    "watchRollup": "./node_modules/rollup/bin/rollup -c --watch --sourcemap inline",
+    "watchBabel": "node_modules/babel-cli/bin/babel.js src/scripts -d build/scripts --source-maps inline --watch",
+    "watchRollup": "node_modules/rollup/bin/rollup -c --watch --sourcemap inline",
     "symlink": "rm node_modules/ornithophobia && ln -s ../src/scripts ./node_modules/ornithophobia"
   },
   "author": "RAVENLORD",
