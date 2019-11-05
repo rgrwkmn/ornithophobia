@@ -1,3 +1,5 @@
+Simple game engine with [Phaser](https://phaser.io/) and [Tiled](https://www.mapeditor.org/)
+
 # Getting Started
 
 1. `npm run setup`
