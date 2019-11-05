@@ -6,3 +6,4 @@
 # If you've already Gotten Started
 
 1. `$ npm start` now you're ready to git r done.
+2. Try `http://localhost:8001/?map=larger/larger.json`
